@@ -106,6 +106,7 @@ class Server
 {
     public static List<UserClient> Clients = new List<UserClient>();
     public static List<User> AllUsers = new List<User>();
+    //Господи боже прости меня за этот величайший костыль 
     public static List<User> SearchingGameUsers = new List<User>();
     private static int OnlinePlayersCount = 0;
 
@@ -265,9 +266,11 @@ class Server
                 {
                     case 1:
                         Game1.ProcessClient(client);
+                        GamesSatus[0] = false;
                         break;
                     case 2:
                         Game2.ProcessClient(client);
+                        GamesSatus[1] = false;
                         break;
                     default:
                         break;
@@ -282,12 +285,12 @@ class Server
     public static void PutUsersInFile()
     {
         string InFile = Newtonsoft.Json.JsonConvert.SerializeObject(AllUsers);
-        File.WriteAllText("FileWithUsers.json", InFile);
+        File.WriteAllText("Users.json", InFile);
     }
 
     public static void GetUsersFromFile()
     {
-        string fileRead = File.ReadAllText("FileWithUsers.json");
+        string fileRead = File.ReadAllText("Users.json");
         AllUsers = Newtonsoft.Json.JsonConvert.DeserializeObject<List<User>>(fileRead);
     }
 
@@ -305,7 +308,7 @@ class Server
 
     public static async Task Main(string[] args)
     {
-        TcpListener tcpListener = new TcpListener(IPAddress.Parse("26.64.111.48"), 9010);
+        TcpListener tcpListener = new TcpListener(IPAddress.Parse("192.168.89.103"), 9010);
         tcpListener.Start();
         _ = Task.Run(async () => await MatchMaker());
         Console.WriteLine("Server started..");

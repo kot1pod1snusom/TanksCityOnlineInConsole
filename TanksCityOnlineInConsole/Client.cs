@@ -490,7 +490,7 @@ class Client
     {
         while (true)
         {
-
+            Console.SetCursorPosition(1, 1);
             Console.Clear();
             user.matchMakingStatus = User.MatchMakingStatus.InMenu;
             Console.Out.WriteLineAsync($"Name - {user.name}, skin - {user.Skin}");
@@ -561,7 +561,7 @@ class Client
     {
         TcpClient tcpClient = new TcpClient();
 
-        await tcpClient.ConnectAsync(IPAddress.Parse("26.64.111.48"), 9010);
+        await tcpClient.ConnectAsync(IPAddress.Parse("192.168.89.103"), 9010);
 
         await Console.Out.WriteLineAsync("Connected..");
 
